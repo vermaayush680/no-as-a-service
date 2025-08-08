@@ -1,4 +1,4 @@
-[
+const reasons = [
   "In a different season of life, I might say yes\u2014but not right now.",
   "While I appreciate it, pursuing this isn't something I can commit to.",
   "Every time I think about it, I hear a tiny \u2018nope\u2019 in the wind.",
@@ -1054,4 +1054,8 @@
   "Declining this request sparks joy in me.",
   "I'm not ignoring you—I'm giving you a very clear 'no'.",
   "Pretend I gave you a clever excuse and just take the 'no' as implied."
-]
+];
+
+module.exports = {
+    reasons
+};
