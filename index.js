@@ -1,5 +1,6 @@
 const express = require('express');
 const rateLimit = require('express-rate-limit');
+const cors = require('cors');
 const fs = require('fs');
 const { reasons } = require('./reasons');
 const moment = require('moment');
@@ -7,6 +8,9 @@ require('dotenv').config(); // Load environment variables from .env file
 const app = express();
 app.set('trust proxy', true);
 const PORT = process.env.PORT || 3000;
+
+// Enable CORS for all routes
+app.use(cors());
 
 
 
