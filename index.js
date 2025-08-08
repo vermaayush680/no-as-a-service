@@ -1,7 +1,7 @@
 const express = require('express');
 const rateLimit = require('express-rate-limit');
 const fs = require('fs');
-
+require('dotenv').config(); // Load environment variables from .env file
 const app = express();
 app.set('trust proxy', true);
 const PORT = process.env.PORT || 3000;
@@ -10,13 +10,14 @@ const PORT = process.env.PORT || 3000;
 const reasons = JSON.parse(fs.readFileSync('./reasons.json', 'utf-8'));
 
 // Rate limiter: 120 requests per minute per IP
+console.log(`Rate limit window: ${process.env.RATE_LIMIT_WINDOW || 60 * 1000} ms`);
 const limiter = rateLimit({
-  windowMs: 60 * 1000, // 1 minute
-  max: 120,
+  windowMs: process.env.RATE_LIMIT_WINDOW || 60 * 1000, // 1 minute
+  max: process.env.RATE_LIMIT_MAX || 120,
   keyGenerator: (req, res) => {
     return req.headers['cf-connecting-ip'] || req.ip; // Fallback if header missing (or for non-CF)
   },
-  message: { error: "Too many requests, please try again later. (120 reqs/min/IP)" }
+  message: { error: `Too many requests, please try again later. (${process.env.RATE_LIMIT_MAX || 120} reqs/min/IP)` }
 });
 
 app.use(limiter);
